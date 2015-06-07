@@ -23,8 +23,16 @@ function sendSqsMessage(sender) {
   });
   sqs = new AWS.SQS();
 
+  var mensajeBody = {
+    "to": "rminguet@gmail.com",
+    "from": "rminguet@gmail.com",
+    "cuerpo": "este es el cuerpo",
+    "asunto": "este es el asunto"
+  };
+
   var params = {
-    MessageBody: '{"name":"' + sender + '"}',
+    //MessageBody: '{"name":"' + sender + '"}',
+    MessageBody: mensajeBody,
     QueueUrl: 'https://sqs.us-west-2.amazonaws.com/921644418190/sample',
     DelaySeconds: 0
   };

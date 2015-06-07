@@ -28,6 +28,7 @@ node_modules
 
 # IDEs
 .idea/
+
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml

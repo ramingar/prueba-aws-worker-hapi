@@ -21,7 +21,12 @@ function sendSqsMessage(sender) {
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
     region: awsRegion
   });
-  sqs = new AWS.SQS();
+
+  var paramsCola = {
+    endpoint: "/enviar_email"
+  }
+
+  sqs = new AWS.SQS(paramsCola);
 
   var mensajeBody = {
     "to": "rminguet@gmail.com",
@@ -33,7 +38,7 @@ function sendSqsMessage(sender) {
   var params = {
     //MessageBody: '{"name":"' + sender + '"}',
     MessageBody: mensajeBody,
-    QueueUrl: 'https://sqs.us-west-2.amazonaws.com/921644418190/cola_pruebas',
+    QueueUrl: 'https://sqs.us-west-2.amazonaws.com/921644418190/cola_prueba',
     DelaySeconds: 0
   };
 

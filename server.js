@@ -33,7 +33,7 @@ function sendSqsMessage(sender) {
   var params = {
     //MessageBody: '{"name":"' + sender + '"}',
     MessageBody: mensajeBody,
-    QueueUrl: 'https://sqs.us-west-2.amazonaws.com/921644418190/sample',
+    QueueUrl: 'https://sqs.us-west-2.amazonaws.com/921644418190/cola_pruebas',
     DelaySeconds: 0
   };
 

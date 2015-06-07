@@ -24,7 +24,7 @@ function sendSqsMessage(sender) {
   sqs = new AWS.SQS();
 
   var params = {
-    MessageBody: 'Aqui va el cuerpo del mensaje',
+    MessageBody: '{"name":"' + sender + '"}',
     QueueUrl: 'https://sqs.us-west-2.amazonaws.com/921644418190/sample',
     DelaySeconds: 0
   };

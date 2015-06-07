@@ -22,11 +22,14 @@ function sendSqsMessage(sender) {
     region: awsRegion
   });
 
+  /*
   var paramsCola = {
     endpoint: "/enviar_email"
   }
+  */
 
-  sqs = new AWS.SQS(paramsCola);
+  //sqs = new AWS.SQS(paramsCola);
+  sqs = new AWS.SQS();
 
   var mensajeBody = {
     "to": "rminguet@gmail.com",

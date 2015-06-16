@@ -1,47 +1,42 @@
-/**
- * Created by rafael on 07/06/15.
- */
-// TODO: refactorizar codigo y usar variables en archivos de configuracion
+var fs = require('fs');
+var config = fs.readFileSync('app_config.json', 'utf8');
+config = JSON.parse(config);
+
 
 var AWS = require('aws-sdk'),
-  awsRegion = 'us-west-2',
   sqs = {},
   Hapi = require('hapi'),
   server = new Hapi.Server();
 
 //server.connection({ host: 'localhost', port: '3000' });
-server.connection({ port: '8081' });
+server.connection({ port: config.PORT });
 
 /* **** FUNCIONES SQS ********************** */
-function sendSqsMessage(sender) {
+function sendSqsMessage(queue, message) {
   'use strict';
 
   AWS.config.update({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-    region: awsRegion
+    region: config.AWS_REGION
   });
-
-  /*
-  var paramsCola = {
-    endpoint: "/enviar_email"
-  }
-  */
 
   //sqs = new AWS.SQS(paramsCola);
   sqs = new AWS.SQS();
 
+  /*
   var mensajeBody = {
     "to": "rminguet@gmail.com",
     "from": "rminguet@gmail.com",
     "cuerpo": "este es el cuerpo",
     "asunto": "este es el asunto"
   };
+  */
 
   var params = {
     //MessageBody: '{"name":"' + sender + '"}',
-    MessageBody: mensajeBody,
-    QueueUrl: 'https://sqs.us-west-2.amazonaws.com/921644418190/cola_prueba',
+    MessageBody: message,
+    QueueUrl: 'https://sqs.' + config.AWS_REGION + '.amazonaws.com/921644418190/' + queue,
     DelaySeconds: 0
   };
 
@@ -49,7 +44,7 @@ function sendSqsMessage(sender) {
     if (err) {
       console.log(err, err.stack);
     } else {
-      console.log('YAY!!, mensaje enviado por ' + sender + '!');
+      console.log('YAY!!, mensaje enviado a ' + queue + '!');
     }
   });
 }
@@ -68,9 +63,11 @@ server.route({
   method: 'GET',
   path: '/{name}',
   handler: function (request, response) {
-    sendSqsMessage(encodeURIComponent(request.params.name));
-    response('Your message ' + encodeURIComponent(request.params.name) +
-        ' has been sent to queue!');
+    sendSqsMessage(
+      encodeURIComponent(request.params.name),
+      request.payload
+    );
+    //response('Your message ' + encodeURIComponent(request.params.name) + 'has been sent to queue!');
   }
 });
 /* **** END: RUTAS ************************** */
@@ -82,23 +79,7 @@ var options = {
   reporters: [{
     reporter: require('good-console'),
     events: { log: '*', response: '*' }
-  }
-  /* mas reporters... */
-  /*, {
-    reporter: require('good-file'),
-    events: { ops: '*' },
-    config: './test/fixtures/awesome_log'
-  }, {
-    reporter: 'good-http',
-    events: { error: '*' },
-    config: {
-      endpoint: 'http://prod.logs:3000',
-      wreck: {
-        headers: { 'x-api-key' : 12345 }
-      }
-    }
-  }*/
-  ]
+  }]
 };
 
 // registro los eventos a los que escucho

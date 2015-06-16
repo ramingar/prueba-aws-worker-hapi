@@ -29,6 +29,7 @@
   "homepage": "https://github.com/ramingar/prueba-aws-worker-hapi",
   "dependencies": {
     "aws-sdk": "*",
+    "fs": "0.0.2",
     "good": "*",
     "good-console": "^5.0.2",
     "hapi": "*"

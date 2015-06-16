@@ -33,7 +33,7 @@ function sendSqsMessage(queue, message) {
   };
   */
 
-  server.log(message);
+  server.log('info', message);
 
   var params = {
     //MessageBody: '{"name":"' + sender + '"}',
@@ -46,7 +46,7 @@ function sendSqsMessage(queue, message) {
     if (err) {
       server.log(err, err.stack);
     } else {
-      server.log('YAY!!, mensaje enviado a ' + queue + '!');
+      server.log('info', 'YAY!!, mensaje enviado a ' + queue + '!');
     }
   });
 }
@@ -69,7 +69,7 @@ server.route({
       encodeURIComponent(request.params.name),
       request.payload
     );
-    response('Your message ' + encodeURIComponent(request.params.name) + 'has been sent to queue!');
+    response('Your message ' + encodeURIComponent(request.params.name) + ' has been sent to queue!');
   }
 });
 /* **** END: RUTAS ************************** */

@@ -67,7 +67,7 @@ server.route({
       encodeURIComponent(request.params.name),
       request.payload
     );
-    //response('Your message ' + encodeURIComponent(request.params.name) + 'has been sent to queue!');
+    response('Your message ' + encodeURIComponent(request.params.name) + 'has been sent to queue!');
   }
 });
 /* **** END: RUTAS ************************** */

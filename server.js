@@ -35,6 +35,7 @@ function sendSqsMessage(queue, message) {
 
   console.log('*********************1');
 
+  console.log('---->' + message);
   server.log('info', message);
 
   console.log('*********************2');
@@ -50,11 +51,12 @@ function sendSqsMessage(queue, message) {
 
   sqs.sendMessage(params, function (err, data) {
     if (err) {
-      server.log(err, err.stack);
+      server.log('ERROR!!', err.stack);
     } else {
       server.log('info', 'YAY!!, mensaje enviado a ' + queue + '!');
     }
   });
+  console.log('*********************4');
 }
 /* **** END: FUNCIONES SQS ***************** */
 

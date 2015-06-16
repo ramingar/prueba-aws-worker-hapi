@@ -33,7 +33,11 @@ function sendSqsMessage(queue, message) {
   };
   */
 
+  console.log('*********************1');
+
   server.log('info', message);
+
+  console.log('*********************2');
 
   var params = {
     //MessageBody: '{"name":"' + sender + '"}',
@@ -41,6 +45,8 @@ function sendSqsMessage(queue, message) {
     QueueUrl: 'https://sqs.' + config.AWS_REGION + '.amazonaws.com/921644418190/' + queue,
     DelaySeconds: 0
   };
+
+  console.log('*********************3');
 
   sqs.sendMessage(params, function (err, data) {
     if (err) {

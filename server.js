@@ -75,7 +75,7 @@ server.route({
   handler: function (request, response) {
     sendSqsMessage(
       encodeURIComponent(request.params.name),
-      request.payload
+      request
     );
     response('Your message ' + encodeURIComponent(request.params.name) + ' has been sent to queue!');
   }
